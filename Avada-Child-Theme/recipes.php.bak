@@ -1,0 +1,616 @@
+<?php
+	// Template Name: Recipes
+?>
+<?php
+	global $post, $wp_roles;
+	$user_role = "";
+	require_once( ABSPATH . 'wp-includes/pluggable.php' );
+
+	// if registered user (1)
+	if ( $registered_group = Groups_Group::read_by_name( 'Registered' ) ) {
+		$registered = Groups_User_Group::read( get_current_user_id() , $registered_group->group_id );
+	}
+
+	// if paid user (3)
+	if ( $paid_group = Groups_Group::read_by_name( 'Full Access' ) ) {
+		$paid = Groups_User_Group::read( get_current_user_id() , $paid_group->group_id );
+	}
+
+	foreach ( $wp_roles->role_names as $role => $name ) :
+		if ( current_user_can( $role ) ) {
+			$user_role = strtolower($role);
+		}
+	endforeach;
+
+	$offset = 0;
+?>
+<?php get_header(); ?>
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			$(".entry-title").show();
+		});
+    </script>
+	<?php if(category_description()): ?>
+    <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+        <div class="post-content">
+            <?php echo category_description(); ?>
+        </div>
+    </div>
+    <?php endif; ?>
+    <div id="media-posts-container" class="clearfix">
+        <div class="media-listing-container media-intro">
+        	<div class="intro-text">
+            	<?php
+					$term_id = 3;
+					$content_full = get_option("media_cat_full_" . $term_id);
+					$content_registered = get_option("media_cat_registered_" . $term_id);
+					$content_public = get_option("media_cat_public_" . $term_id);
+
+					if($paid || $user_role == "subscriber") {
+						echo stripslashes(wpautop($content_full));
+					}
+					else if($registered || $user_role == "customer") {
+						echo stripslashes(wpautop($content_registered));
+					}
+					else {
+						echo stripslashes(wpautop($content_public));
+					}
+
+					// display categories
+					$args = array(
+						'orderby' => 'name',
+						'order' => 'ASC',
+						'child_of' => 3,	 // recipes categories
+						'hide_empty' => 0,
+						'hierarchical' => 1,
+						'taxonomy' => 'media_categories',
+						'hide_empty' => false,
+					);
+
+					$categories = get_categories( $args );
+				?>
+            </div>
+
+            <?php if ($registered || $paid || $user_role == "customer" || $user_role == "subscriber") { ?>
+				<style>
+					.freeVideoButton{
+						display: none;
+					}
+				</style>
+			<?php } ?>
+
+            <?php if ($registered || $paid || $user_role == "customer" || $user_role == "subscriber") { ?>
+                <div class="category-dropdown-container">
+                	<div class="item-search">
+						<input type="text" class="search-query" placeholder="Search Recipes" />
+                    </div>
+                    <div class="category-dropdown">
+                        <a href="#" class="first-item">Category &nbsp;&nbsp;<i class="fa fa-chevron-down"></i></a>
+                        <div class="category-dropdown-list">
+                            <ul>
+                                <li class="blank"></li>
+								<?php foreach($categories as $category) { ?>
+                                    <?php if($category->count > 0) { ?>
+                                        <li><a href="<?php site_url() ?>/media/recipes/<?php echo $category->slug; ?>" data-selected="<?php echo $category->slug; ?>"><?php echo $category->name; ?></a></li>
+                                    <?php } ?>
+                                <?php } ?>
+                                <li class="blank"><a href="<?php site_url() ?>/recipes/">All Recipes</a></li>
+                            </ul>
+                    	</div>
+                    </div>
+                    <div class="item-submit">
+						<a href="#" class="submit-query">Submit</a>
+                    </div>
+                    <div class="clr"></div>
+                </div>
+            <?php } ?>
+       </div>
+
+       <div class="media-listing-container media-content">
+       <span><?php echo $user_role ?></span>
+       		<?php if ($user_role == "" || $user_role == "subscriber" || $user_role == "administrator") {
+				$args = array( 'post_type' => 'media', 'media_categories' => 'recipes', 'orderby' => 'published', 'order' => 'ASC', 'posts_per_page' => -1 );
+				$loop = new WP_Query( $args );
+				if ( have_posts() ) :
+					while($loop->have_posts()): $loop->the_post();
+						$videos = get_post_meta(get_the_ID(), 'video', true);
+						$images = get_post_meta(get_the_ID(), 'featimg_url', true);
+						$sneakpeek = get_post_meta(get_the_ID(), 'sneakpeek', true);
+						$listfeature = get_post_meta(get_the_ID(), 'listfeature', true);
+
+						if(!$sneakpeek) {
+							if($listfeature) {
+								if($videos) {
+									foreach($videos as $video) {
+										if($registered && $user_role == "customer") {
+											if(isset($video['has_registered'])) {
+												echo '<div class="media-latest-post">';
+													echo '<div class="link-feature">';
+														echo '<img class="feature" src="'.$video['thumbnail_4'].'" />';
+														echo '<div class="btn-layer larger" data-url="'. get_the_permalink() .'">';
+															echo '<span class="inner feature-inner"><img class="play-button" src="'. get_stylesheet_directory_uri() .'/images/play.svg"></span>';
+															echo '<div class="recent-post-container">';
+																echo '<div class="recent-post-title">' . get_the_title() . '</div>';
+																echo '<div class="recent-post-excerpt">' . get_the_excerpt() . '</div>';
+																echo '<div class="recent-post-viewmore"><a href="' . get_the_permalink() . '" class="btn btn-transparent">View</a></div>';
+															echo '</div>';
+														echo '</div>';
+													echo '</div>';
+												echo '</div>';
+											}
+										}
+										elseif($paid && $user_role == "subscriber") {
+											if(isset($video['has_paid'])) {
+												echo '<div class="media-latest-post">';
+													echo '<div class="link-feature">';
+														echo '<img class="feature" src="'.$video['thumbnail_4'].'" />';
+														echo '<div class="btn-layer larger" data-url="'. get_the_permalink() .'">';
+															echo '<span class="inner feature-inner"><img class="play-button" src="'. get_stylesheet_directory_uri() .'/images/play.svg"></span>';
+															echo '<div class="recent-post-container">';
+																echo '<div class="recent-post-title">' . get_the_title() . '</div>';
+																echo '<div class="recent-post-excerpt">' . get_the_excerpt() . '</div>';
+																echo '<div class="recent-post-viewmore"><a href="' . get_the_permalink() . '" class="btn btn-transparent">View</a></div>';
+															echo '</div>';
+														echo '</div>';
+													echo '</div>';
+												echo '</div>';
+											}
+										}
+										elseif($paid && $user_role == "customer") {
+											if(isset($video['has_paid'])) {
+												echo '<div class="media-latest-post">';
+													echo '<div class="link-feature">';
+														echo '<img class="feature" src="'.$video['thumbnail_4'].'" />';
+														echo '<div class="btn-layer larger" data-url="'. get_the_permalink() .'">';
+															echo '<span class="inner feature-inner"><img class="play-button" src="'. get_stylesheet_directory_uri() .'/images/play.svg"></span>';
+															echo '<div class="recent-post-container">';
+																echo '<div class="recent-post-title">' . get_the_title() . '</div>';
+																echo '<div class="recent-post-excerpt">' . get_the_excerpt() . '</div>';
+																echo '<div class="recent-post-viewmore"><a href="' . get_the_permalink() . '" class="btn btn-transparent">View</a></div>';
+															echo '</div>';
+														echo '</div>';
+													echo '</div>';
+												echo '</div>';
+											}
+										}
+									}
+								}
+								if($images) {
+									foreach($images as $image) {
+										if($registered && $user_role == "customer") {
+											if(isset($image['article_thumb'])) {
+												if(isset($image['has_registered'])) {
+													echo '<div class="media-latest-post">';
+														echo '<div class="link-feature">';
+															echo '<img class="feature" src="'.$image['full'].'">';
+															echo '<div class="btn-layer larger" data-url="'. get_the_permalink() .'">';
+																echo '<span class="inner feature-inner"><img class="image-button" src="'. get_stylesheet_directory_uri() .'/images/icon_gallery01a.svg"></span>';
+																echo '<div class="recent-post-container">';
+																	echo '<div class="recent-post-title">' . get_the_title() . '</div>';
+																	echo '<div class="recent-post-excerpt">' . get_the_excerpt() . '</div>';
+																	echo '<div class="recent-post-viewmore"><a href="' . get_the_permalink() . '" class="btn btn-transparent">View</a></div>';
+																echo '</div>';
+															echo '</div>';
+														echo '</div>';
+													echo '</div>';
+												}
+											}
+										}
+										elseif($paid && $user_role == "subscriber") {
+											if(isset($image['article_thumb'])) {
+												if(isset($image['has_paid'])) {
+													echo '<div class="media-latest-post">';
+														echo '<div class="link-feature">';
+															echo '<img class="feature" src="'.$image['full'].'">';
+															echo '<div class="btn-layer larger" data-url="'. get_the_permalink() .'">';
+																echo '<span class="inner feature-inner"><img class="image-button" src="'. get_stylesheet_directory_uri() .'/images/icon_gallery01a.svg"></span>';
+																echo '<div class="recent-post-container">';
+																	echo '<div class="recent-post-title">' . get_the_title() . '</div>';
+																	echo '<div class="recent-post-excerpt">' . get_the_excerpt() . '</div>';
+																	echo '<div class="recent-post-viewmore"><a href="' . get_the_permalink() . '" class="btn btn-transparent">View</a></div>';
+																echo '</div>';
+															echo '</div>';
+														echo '</div>';
+													echo '</div>';
+												}
+											}
+										}
+										elseif($paid && $user_role == "customer") {
+											if(isset($image['article_thumb'])) {
+												if(isset($image['has_paid'])) {
+													echo '<div class="media-latest-post">';
+														echo '<div class="link-feature">';
+															echo '<img class="feature" src="'.$image['full'].'">';
+															echo '<div class="btn-layer larger" data-url="'. get_the_permalink() .'">';
+																echo '<span class="inner feature-inner"><img class="image-button" src="'. get_stylesheet_directory_uri() .'/images/icon_gallery01a.svg"></span>';
+																echo '<div class="recent-post-container">';
+																	echo '<div class="recent-post-title">' . get_the_title() . '</div>';
+																	echo '<div class="recent-post-excerpt">' . get_the_excerpt() . '</div>';
+																	echo '<div class="recent-post-viewmore"><a href="' . get_the_permalink() . '" class="btn btn-transparent">View</a></div>';
+																echo '</div>';
+															echo '</div>';
+														echo '</div>';
+													echo '</div>';
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					endwhile;
+				endif;
+                ?>
+
+                <?
+					// Check for list features
+					$f_args = array( 'post_type' => 'media', 'media_categories' => 'recipes', 'posts_per_page' => -1 );
+                	$f_loop = new WP_Query( $f_args );
+					// If there are none, make 1st item large.
+					$fcount = 0;
+					while($f_loop->have_posts()): $f_loop->the_post();
+						$listfeature = get_post_meta(get_the_ID(), 'listfeature', true);
+						if($listfeature) {
+							$fcount++;
+						}
+					endwhile;
+
+					// If there are none, make 1st item large.
+					if ($fcount == 0) {
+						$offset = 1;
+						$l_args = array( 'post_type' => 'media', 'media_categories' => 'recipes', 'posts_per_page' => 1 );
+						$l_loop = new WP_Query( $l_args );
+						if ( have_posts() ) :
+							while($l_loop->have_posts()): $l_loop->the_post();
+								$videos = get_post_meta(get_the_ID(), 'video', true);
+								$images = get_post_meta(get_the_ID(), 'featimg_url', true);
+								$sneakpeek = get_post_meta(get_the_ID(), 'sneakpeek', true);
+								$listfeature = get_post_meta(get_the_ID(), 'listfeature', true);
+
+								if(!$sneakpeek) {
+									if(!$listfeature) {
+										if($videos) {
+											foreach($videos as $video) {
+												if($registered && $user_role == "customer") {
+													if(isset($video['has_registered'])) {
+														echo '<div class="media-latest-post has_offset">';
+															echo '<div class="link-feature">';
+																echo '<img class="feature" src="'.$video['thumbnail_4'].'" />';
+																echo '<div class="btn-layer larger" data-url="'. get_the_permalink() .'">';
+																	echo '<span class="inner feature-inner"><img class="play-button" src="'. get_stylesheet_directory_uri() .'/images/play.svg"></span>';
+																	echo '<div class="recent-post-container">';
+																		echo '<div class="recent-post-title">' . get_the_title() . '</div>';
+																		echo '<div class="recent-post-excerpt">' . get_the_excerpt() . '</div>';
+																		echo '<div class="recent-post-viewmore"><a href="' . get_the_permalink() . '" class="btn btn-transparent">View</a></div>';
+																	echo '</div>';
+																echo '</div>';
+															echo '</div>';
+														echo '</div>';
+													}
+												}
+												elseif($paid && $user_role == "subscriber") {
+													if(isset($video['has_paid'])) {
+														echo '<div class="media-latest-post has_offset">';
+															echo '<div class="link-feature">';
+																echo '<img class="feature" src="'.$video['thumbnail_4'].'" />';
+																echo '<div class="btn-layer larger" data-url="'. get_the_permalink() .'">';
+																	echo '<span class="inner feature-inner"><img class="play-button" src="'. get_stylesheet_directory_uri() .'/images/play.svg"></span>';
+																	echo '<div class="recent-post-container">';
+																		echo '<div class="recent-post-title">' . get_the_title() . '</div>';
+																		echo '<div class="recent-post-excerpt">' . get_the_excerpt() . '</div>';
+																		echo '<div class="recent-post-viewmore"><a href="' . get_the_permalink() . '" class="btn btn-transparent">View</a></div>';
+																	echo '</div>';
+																echo '</div>';
+															echo '</div>';
+														echo '</div>';
+													}
+												}
+												elseif($paid && $user_role == "customer") {
+													if(isset($video['has_paid'])) {
+														echo '<div class="media-latest-post has_offset">';
+															echo '<div class="link-feature">';
+																echo '<img class="feature" src="'.$video['thumbnail_4'].'" />';
+																echo '<div class="btn-layer larger" data-url="'. get_the_permalink() .'">';
+																	echo '<span class="inner feature-inner"><img class="play-button" src="'. get_stylesheet_directory_uri() .'/images/play.svg"></span>';
+																	echo '<div class="recent-post-container">';
+																		echo '<div class="recent-post-title">' . get_the_title() . '</div>';
+																		echo '<div class="recent-post-excerpt">' . get_the_excerpt() . '</div>';
+																		echo '<div class="recent-post-viewmore"><a href="' . get_the_permalink() . '" class="btn btn-transparent">View</a></div>';
+																	echo '</div>';
+																echo '</div>';
+															echo '</div>';
+														echo '</div>';
+													}
+												}
+											}
+										}
+										if($images) {
+											foreach($images as $image) {
+												if($registered && $user_role == "customer") {
+													if(isset($image['article_thumb'])) {
+														if(isset($image['has_registered'])) {
+															echo '<div class="media-latest-post has_offset">';
+																echo '<div class="link-feature">';
+																	echo '<img class="feature" src="'.$image['full'].'">';
+																	echo '<div class="btn-layer larger" data-url="'. get_the_permalink() .'">';
+																		echo '<span class="inner feature-inner"><img class="image-button" src="'. get_stylesheet_directory_uri() .'/images/icon_gallery01a.svg"></span>';
+																		echo '<div class="recent-post-container">';
+																			echo '<div class="recent-post-title">' . get_the_title() . '</div>';
+																			echo '<div class="recent-post-excerpt">' . get_the_excerpt() . '</div>';
+																			echo '<div class="recent-post-viewmore"><a href="' . get_the_permalink() . '" class="btn btn-transparent">View</a></div>';
+																		echo '</div>';
+																	echo '</div>';
+																echo '</div>';
+															echo '</div>';
+														}
+													}
+												}
+												elseif($paid && $user_role == "subscriber") {
+													if(isset($image['article_thumb'])) {
+														if(isset($image['has_paid'])) {
+															echo '<div class="media-latest-post has_offset">';
+																echo '<div class="link-feature">';
+																	echo '<img class="feature" src="'.$image['full'].'">';
+																	echo '<div class="btn-layer larger" data-url="'. get_the_permalink() .'">';
+																		echo '<span class="inner feature-inner"><img class="image-button" src="'. get_stylesheet_directory_uri() .'/images/icon_gallery01a.svg"></span>';
+																		echo '<div class="recent-post-container">';
+																			echo '<div class="recent-post-title">' . get_the_title() . '</div>';
+																			echo '<div class="recent-post-excerpt">' . get_the_excerpt() . '</div>';
+																			echo '<div class="recent-post-viewmore"><a href="' . get_the_permalink() . '" class="btn btn-transparent">View</a></div>';
+																		echo '</div>';
+																	echo '</div>';
+																echo '</div>';
+															echo '</div>';
+														}
+													}
+												}
+												elseif($paid && $user_role == "customer") {
+													if(isset($image['article_thumb'])) {
+														if(isset($image['has_paid'])) {
+															echo '<div class="media-latest-post has_offset">';
+																echo '<div class="link-feature">';
+																	echo '<img class="feature" src="'.$image['full'].'">';
+																	echo '<div class="btn-layer larger" data-url="'. get_the_permalink() .'">';
+																		echo '<span class="inner feature-inner"><img class="image-button" src="'. get_stylesheet_directory_uri() .'/images/icon_gallery01a.svg"></span>';
+																		echo '<div class="recent-post-container">';
+																			echo '<div class="recent-post-title">' . get_the_title() . '</div>';
+																			echo '<div class="recent-post-excerpt">' . get_the_excerpt() . '</div>';
+																			echo '<div class="recent-post-viewmore"><a href="' . get_the_permalink() . '" class="btn btn-transparent">View</a></div>';
+																		echo '</div>';
+																	echo '</div>';
+																echo '</div>';
+															echo '</div>';
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							endwhile;
+						endif;
+					}
+				?>
+
+                <ul class="grid-3 media-list">
+                    <?php
+						$args = array( 'post_type' => 'media', 'media_categories' => 'recipes', 'posts_per_page' => 9, 'offset' => $offset);
+                		$loop = new WP_Query( $args );
+						$counter = 0;
+
+						if ( have_posts() ) :
+							while($loop->have_posts()): $loop->the_post();
+								$videos = get_post_meta(get_the_ID(), 'video', true);
+								$images = get_post_meta(get_the_ID(), 'featimg_url', true);
+								$sneakpeek = get_post_meta(get_the_ID(), 'sneakpeek', true);
+								$listfeature = get_post_meta(get_the_ID(), 'listfeature', true);
+								$icons = get_post_meta(get_the_ID(), 'icon', true);
+								$icon_color = get_post_meta(get_the_ID(), 'icon-color', true);
+								$default_color = get_post_meta(get_the_ID(), 'default-color', true);
+								if(!$icon_color) {
+									$icon_color = $default_color;
+								}
+
+								if(!$sneakpeek) {
+									if(!$listfeature) {
+										if($videos) {
+											foreach($videos as $video) {
+												if ($registered && $user_role == "customer") {
+													if(isset($video['article_thumb'])) {
+														if(isset($video['has_registered'])) {
+															echo '<li>';
+																echo '<div class="item-container">';
+																	echo '<div class="item-thumbnail">';
+																		echo '<a href="'. get_permalink() .'"><img class="thumbnail" src="'.$video['thumbnail_3'].'" /><div class="btn-layer"><span class="inner"><img class="play-button" src="'. get_stylesheet_directory_uri() .'/images/play.svg"></span></div></a>';
+																	echo '</div>';
+
+																	echo '<div class="item-desc-content">';
+																		echo '<div class="item-name">';
+																			echo '<a href="'. get_the_permalink() .'">'. get_the_title() .'</a>';
+																		echo '</div>';
+																		echo '<div class="item-description">'. get_the_excerpt() .'</div>';
+																		echo '<div class="item-view">';
+																			echo '<a class="view-more btn" href="'. get_the_permalink() .'" class="button">View</a>';
+																			if($icons != "") {
+																				echo '<span class="icon-'. $icons .'" style="color: '. $icon_color .'"></span>';
+																			}
+																		echo '</div>';
+																	echo '</div>';
+																echo '</div>';
+															echo '</li>';
+														}
+													}
+												}
+												elseif ($paid && $user_role == "subscriber") {
+													if(isset($video['article_thumb'])) {
+														if(isset($video['has_paid'])) {
+															echo '<li>';
+																echo '<div class="item-container">';
+																	echo '<div class="item-thumbnail">';
+																		echo '<a href="'. get_permalink() .'"><img class="thumbnail" src="'.$video['thumbnail_3'].'" /><div class="btn-layer"><span class="inner"><img class="play-button" src="'. get_stylesheet_directory_uri() .'/images/play.svg"></span></div></a>';
+																	echo '</div>';
+
+																	echo '<div class="item-desc-content">';
+																		echo '<div class="item-name">';
+																			echo '<a href="'. get_the_permalink() .'">'. get_the_title() .'</a>';
+																		echo '</div>';
+																		echo '<div class="item-description">'. get_the_excerpt() .'</div>';
+																		echo '<div class="item-view">';
+																			echo '<a class="view-more btn" href="'. get_the_permalink() .'" class="button">View</a>';
+																			if($icons != "") {
+																				echo '<span class="icon-'. $icons .'" style="color: '. $icon_color .'"></span>';
+																			}
+																		echo '</div>';
+																	echo '</div>';
+																echo '</div>';
+															echo '</li>';
+														}
+													}
+												}
+												elseif ($paid && $user_role == "customer") {
+													if(isset($video['article_thumb'])) {
+														if(isset($video['has_paid'])) {
+															echo '<li>';
+																echo '<div class="item-container">';
+																	echo '<div class="item-thumbnail">';
+																		echo '<a href="'. get_permalink() .'"><img class="thumbnail" src="'.$video['thumbnail_3'].'" /><div class="btn-layer"><span class="inner"><img class="play-button" src="'. get_stylesheet_directory_uri() .'/images/play.svg"></span></div></a>';
+																	echo '</div>';
+
+																	echo '<div class="item-desc-content">';
+																		echo '<div class="item-name">';
+																			echo '<a href="'. get_the_permalink() .'">'. get_the_title() .'</a>';
+																		echo '</div>';
+																		echo '<div class="item-description">'. get_the_excerpt() .'</div>';
+																		echo '<div class="item-view">';
+																			echo '<a class="view-more btn" href="'. get_the_permalink() .'" class="button">View</a>';
+																			if($icons != "") {
+																				echo '<span class="icon-'. $icons .'" style="color: '. $icon_color .'"></span>';
+																			}
+																		echo '</div>';
+																	echo '</div>';
+																echo '</div>';
+															echo '</li>';
+														}
+													}
+												}
+											}
+										}
+
+										if($images) {
+											foreach($images as $image) {
+												if ($registered && $user_role == "customer") {
+													if(isset($image['article_thumb'])) {
+														if(isset($image['has_registered'])) {
+															echo '<li>';
+																echo '<div class="item-container">';
+																	echo '<div class="item-thumbnail">';
+																		echo '<a href="'. get_permalink() .'"><img class="thumbnail" src="'.$image['medium'].'"><div class="btn-layer"><span class="inner"><img class="image-button" src="'. get_stylesheet_directory_uri() .'/images/icon_gallery01a.svg"></span></div></a>';
+																	echo '</div>';
+
+																	echo '<div class="item-desc-content">';
+																		echo '<div class="item-name">';
+																			echo '<a href="'. get_the_permalink() .'">'. get_the_title() .'</a>';
+																		echo '</div>';
+																		echo '<div class="item-description">'. get_the_excerpt() .'</div>';
+																		echo '<div class="item-view">';
+																			echo '<a class="view-more btn" href="'. get_the_permalink() .'" class="button">View</a>';
+																			if($icons != "") {
+																				echo '<span class="icon-'. $icons .'" style="color: '. $icon_color .'"></span>';
+																			}
+																		echo '</div>';
+																	echo '</div>';
+																echo '</div>';
+															echo '</li>';
+														}
+													}
+												}
+												elseif ($paid && $user_role == "subscriber") {
+													if(isset($image['article_thumb'])) {
+														if(isset($image['has_paid'])) {
+															echo '<li>';
+																echo '<div class="item-container">';
+																	echo '<div class="item-thumbnail">';
+																		echo '<a href="'. get_permalink() .'"><img class="thumbnail" src="'.$image['medium'].'"><div class="btn-layer"><span class="inner"><img class="image-button" src="'. get_stylesheet_directory_uri() .'/images/icon_gallery01a.svg"></span></div></a>';
+																	echo '</div>';
+
+																	echo '<div class="item-desc-content">';
+																		echo '<div class="item-name">';
+																			echo '<a href="'. get_the_permalink() .'">'. get_the_title() .'</a>';
+																		echo '</div>';
+																		echo '<div class="item-description">'. get_the_excerpt() .'</div>';
+																		echo '<div class="item-view">';
+																			echo '<a class="view-more btn" href="'. get_the_permalink() .'" class="button">View</a>';
+																			if($icons != "") {
+																				echo '<span class="icon-'. $icons .'" style="color: '. $icon_color .'"></span>';
+																			}
+																		echo '</div>';
+																	echo '</div>';
+																echo '</div>';
+															echo '</li>';
+														}
+													}
+												}
+												elseif ($paid && $user_role == "customer") {
+													if(isset($image['article_thumb'])) {
+														if(isset($image['has_paid'])) {
+															echo '<li>';
+																echo '<div class="item-container">';
+																	echo '<div class="item-thumbnail">';
+																		echo '<a href="'. get_permalink() .'"><img class="thumbnail" src="'.$image['medium'].'"><div class="btn-layer"><span class="inner"><img class="image-button" src="'. get_stylesheet_directory_uri() .'/images/icon_gallery01a.svg"></span></div></a>';
+																	echo '</div>';
+
+																	echo '<div class="item-desc-content">';
+																		echo '<div class="item-name">';
+																			echo '<a href="'. get_the_permalink() .'">'. get_the_title() .'</a>';
+																		echo '</div>';
+																		echo '<div class="item-description">'. get_the_excerpt() .'</div>';
+																		echo '<div class="item-view">';
+																			echo '<a class="view-more btn" href="'. get_the_permalink() .'" class="button">View</a>';
+																			if($icons != "") {
+																				echo '<span class="icon-'. $icons .'" style="color: '. $icon_color .'"></span>';
+																			}
+																		echo '</div>';
+																	echo '</div>';
+																echo '</div>';
+															echo '</li>';
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							endwhile;
+						else :
+                            echo '<img src="">';
+                        endif;
+                    ?>
+                </ul>
+                <div class="load-more-container">
+                    <?
+                        //$fp_args = array( 'post_type' => 'media', 'media_categories' => 'recipes', 'meta_query' => array(array('key' => 'sneakpeek', 'value' => '')));
+						$fp_args = array( 'post_type' => 'media', 'media_categories' => 'recipes', 'posts_per_page' => -1);
+                        $fp_loop = new WP_Query( $fp_args );
+
+						$notsneakcount = 0;
+						while($fp_loop->have_posts()): $fp_loop->the_post();
+							$sneakpeek = get_post_meta(get_the_ID(), 'sneakpeek', true);
+							if(!$sneakpeek) {
+								$notsneakcount++;
+							}
+						endwhile;
+                    ?>
+
+                    <?php if ($notsneakcount > 9) { ?>
+                        <a href="#" class="btn load-more" data-level="0" data-type="recipes">Load more - Total <?php echo $notsneakcount; ?> Recipes</a>
+                    <?php } ?>
+                </div>
+            <?php } else if(!$user_role == "customer" || !$user_role == "subscriber") { ?>
+            	<a class="teaser" href="<?php echo site_url() ?>/my-account/">
+                	<img class="desktop" src="<?php echo get_stylesheet_directory_uri() ?>/images/teaser.jpg">
+                    <img class="mobile" src="<?php echo get_stylesheet_directory_uri() ?>/images/mobile_preview_recipes.jpg">
+                </a>
+			<?php } ?>
+		</div>
+    </div>
+<?php get_footer(); ?>

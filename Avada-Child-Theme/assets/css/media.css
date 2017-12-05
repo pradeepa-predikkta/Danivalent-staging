@@ -1,0 +1,407 @@
+.mobile-videos { display: none; }
+
+.video-clip {
+	display: none;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	z-index: 100000;
+	background-color: rgba(0,0,0,0.8);
+}
+
+.video-clip iframe {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+@media only screen and (max-device-width: 1024px) and (min-device-width: 768px) and (orientation: portrait) {
+	.fusion-social-networks {
+		padding: 15px 0px !important;
+	}
+}
+@media only screen and (max-device-width: 1024px) and (min-device-width: 768px) and (orientation: landscape) {
+	footer { padding: 20px 20px !important; }
+	#main { padding-bottom: 0px !important; }
+}
+
+@media only screen and (max-width: 980px) {
+  #wrapper #woocommerce_products-2 .product_list_widget li .wp-post-image {float:none; margin-right:0px; max-width:100%;}
+}
+
+@media (min-width: 881px) and (max-width: 979px) {
+
+	.fusion-main-menu #menu-main-menu > li > a {font-size: 13px;}
+	.fusion-main-menu #menu-main-menu > li {padding-right: 8px;}
+	.fusion-main-menu .menu-item-16596>a>span {font-size: 11px;padding: 8px 8px;}
+	.fusion-main-menu .fusion-menu-login-box a span {font-size: 11px;padding: 8px 8px;}
+	.fusion-main-menu .menu-item-16596 {padding-right: 5px;}
+
+
+}
+
+@media (min-width: 801px) and (max-width: 880px) {
+
+	.fusion-main-menu #menu-main-menu > li > a {font-size: 11px;}
+	.fusion-main-menu #menu-main-menu > li {padding-right: 6px;}
+	.fusion-main-menu .menu-item-16596>a>span {font-size: 10px;padding: 8px 8px;}
+	.fusion-main-menu .fusion-menu-login-box a span {font-size: 10px;padding: 8px 8px;}
+	.fusion-main-menu .menu-item-16596 {padding-right: 5px;}
+
+
+}
+
+@media (min-width: 801px) {
+	#menu-item-402 { display: none; }
+}
+
+@media only screen and (max-width: 800px) {
+	/* mobile menu */
+	.fusion-mobile-menu-icons a { margin-top: 10px; }
+	#menu-item-402 { display: block; }
+	#mobile-menu-item-16596 {display: none;}
+	.fusion-icon-shopping-cart {display: none;}
+	.fusion-mobile-menu-icons a.mobile-btn-subscribe { font-size: 11px !important; color: #00adef !important; padding: 8px 9px !important; margin-top:5px; margin-left: 0px;}
+	.mobile-btn-subscribe:hover,
+	.mobile-btn-subscribe:active { color: #fff !important; }
+
+	#wrapper .mob-my-account {float:right; margin-left:10px; margin-top:5px; display:block; width:32px;margin-right:10px;}
+	#wrapper .mob-my-account .icon-wrapper {
+		background-color:#00adef;
+		font-size:18px;
+		color:#fff;
+		height:32px;
+		width:32px;
+		margin-right:0px;
+		display:block;
+		border-radius:32px;
+		-webkit-border-radius:32px;
+		text-align:center;
+		line-height: 147%;
+}
+	.fusion-icon.fusion-icon-bars {margin-left: 10px;}
+
+	/* buttons */
+	.btn:active {
+		background-color: #009bd7;
+		border: 2px solid #009bd7;
+		color: #fff;
+	}
+
+	/* containers */
+	#main { padding-top: 20px !important; padding-bottom: 20px !important; }
+	#content { top: 0px !important; }
+	.page-id-256 #content { top: -60px !important; }
+	.page-template-rc-page #content > .inner,
+	.single-product #content .product,
+	.tax-product_cat .woocommerce-container ul.products,
+	.page-template-recipes-php #media-posts-container,
+	.single #media-posts-container, .single-post #content,
+	.blog #content, .woocommerce-account #content,
+	.woocommerce-cart #content,
+	.woocommerce-checkout #content { padding: 20px; }
+	.page-id-174 .post-content p { margin-bottom: 0px; }
+
+	#media-posts-container { position: static; }
+	.blog .post { margin-bottom:48px; }
+
+	.media-listing-container.media-content {
+		padding-top: 20px;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+	.page-template-recipes-php #media-posts-container,
+	.page-template-chef-php #media-posts-container,
+	.post-type-archive-media #media-posts-container {
+    	padding: 20px 0px 60px 0px;
+	}
+
+	.media-listing-container { padding-left: 20px; padding-right: 20px; padding-bottom: 20px; }
+	.media-latest-post { margin-bottom: 20px; }
+	.category-dropdown-container { padding-top: 20px; }
+
+	.grid-2 li { width: 48%; margin-right: 4%; }
+	.grid-3 li { width: 30%; margin-right: 5%; }
+	.fusion-body .products li { margin-bottom: 40px; }
+
+	.single #media-posts-container { padding: 20px; }
+	.single .media-listing-container { padding: 0px; }
+	.single .media-listing-container h3 { margin: 0px 0px 20px 0px; }
+	.single .feature-header,
+	.single .banner_image { margin-bottom: 20px !important; }
+
+	.content-header { margin-top: 20px; }
+
+	.item-name { margin-top: 15px; }
+
+	/* Recipes */
+
+	.category-dropdown-container .category-section {float:none; padding-bottom:10px;}
+
+	/* text */
+	.post-content h1 { line-height: 140% !important; font-size: 24px !important; margin-bottom: 10px; }
+	h2.post-header { margin-top: 24px; margin-bottom: 12px; }
+	.post-content h3.sub-header { margin: 0px 0px 20px 0px; font-size: 14px; }
+	.fusion-page-title-captions h2 { margin-top: 0px; }
+	.media-intro { font-size: 24px; }
+	.item-name a { font-size: 15px; }
+	.media-listing-container .item-description p { font-size: 13px; line-height: 140%; }
+	.item-view .view-more { border-radius: 20px; font-size: 16px; }
+
+	/* media */
+	.larger:active .recent-post-container,
+	.larger:focus .recent-post-container {
+		-webkit-transition: opacity 0.7s ease-in-out;
+		-moz-transition: opacity 0.7s ease-in-out;
+		-o-transition: opacity 0.7s ease-in-out;
+		transition: opacity 0.7s ease-in-out;
+		opacity: 1;
+	}
+
+	/* footer */
+	footer { padding:20px 20px !important;	}
+	footer .fusion-columns .fusion-column { margin: 0px; }
+
+	/* home page */
+	.feature_article { padding: 20px 25px 40px; }
+	.feature_article_date { margin-bottom: 10px; }
+	.feature_article_title { margin-bottom: 17px; font-size: 32px; }
+	.feature_article_subject { margin-bottom: 17px; }
+	.sneak_peek_container {
+		padding: 25px 25px 0px;
+	}
+
+	/* woo */
+
+	.product_list_widget .wp-post-image {float: none; max-width: 100%; width: 100%; margin-right: 0px;}
+	.woocommerce-cart .woocommerce #coupon_code {margin-bottom: 20px;}
+	#wrapper #woocommerce_products-2 .product_list_widget li .wp-post-image {}
+
+}
+
+@media only screen and (max-width: 768px) {
+	.desktop-videos { display: none; }
+	.mobile-videos { display: block; }
+}
+
+@media only screen and (max-width: 767px) {
+	#wrapper #woocommerce_products-2 .product_list_widget li {width:50%; float:left; border-bottom:0px;}
+	#wrapper #woocommerce_products-2 .product_list_widget li:nth-child(2n) {padding: 0px 25px 25px 25px;}
+	#sbi_images .sbi_item {float:left !important; width:33.33% !important;}
+	#sbi_images > .sbi_item(3n+1) {clear:left !important;}
+}
+
+@media only screen and (max-width: 680px) {
+
+.category-dropdown {float:none;}
+
+.category-dropdown a.first-item {width:100%;}
+.category-dropdown .category-dropdown-list {width:100%;position: relative; border:0px;margin: -40px 0 10px 0;}
+.category-dropdown ul { overflow:visible; max-height:680px;}
+.category-dropdown ul li {border-bottom: #f0f0f0 1px solid;}
+.category-dropdown ul li:first-child {border-bottom:none;}
+.category-dropdown ul li:last-child {border-bottom:none;}
+.category-dropdown ul li a {padding: 10px 20px;}
+.item-desc-content { font-size:12px;}
+
+}
+
+@media only screen and (max-width: 700px) {
+.woocommerce-account .subscription_details tr:last-child td:first-child { display:none;}
+}
+
+@media only screen and (max-width: 640px) {
+	.page-template-rc-page #content { top: 0px !important; }
+	.page-template-rc-page #content > .inner { padding: 20px 15px 20px 15px!important; }
+	#main { padding: 10px !important; }
+	#content { margin-bottom: 0px !important; }
+
+	.recent-post-title { font-size: 32px; }
+	.feature_article {
+		padding: 20px 25px 40px;
+	}
+	.feature_article_date {
+		 margin-bottom: 10px;
+	}
+	.feature_article_title {
+		margin-bottom: 17px;
+		font-size: 32px;
+	}
+	.feature_article_subject {
+		margin-bottom: 17px;
+		font-size: 14px;
+	}
+	.sneak_peek_container {
+		padding: 25px 25px;
+	}
+	.media-list { margin-bottom: 20px }
+	.page-template-rc-page #content { top: 0px; }
+	.category-dropdown-container {
+    padding-top: 10px;
+	margin-top:10px;
+	}
+	.load-more-container {padding-top: 10px; padding-bottom: 10px;}
+
+/* My Account */
+.my_account_subscriptions.my_account_orders thead { display:none;}
+
+
+}
+@media only screen and (max-width: 480px) {
+
+
+	/* Header */
+
+	#wrapper .mob-my-account {margin-left:10px;margin-top: 3px;width: 27px; margin-right:0px;}
+	#wrapper .mob-my-account .icon-wrapper {
+		height: 27px;
+		width: 27px;
+		line-height: 148%;
+		font-size: 16px;
+		border-radius: 27px;
+   		-webkit-border-radius: 27px;
+	}
+	.fusion-mobile-menu-icons a {margin-top: 6px;}
+	.fusion-mobile-menu-icons a.mobile-btn-subscribe {font-size: 9px!important; padding: 7px 8px !important;margin-top: 3px;}
+
+	.fusion-logo a .fusion-standard-logo {max-height: 34px !important}
+	.wpcf7-form .wpcf7-number,
+	.wpcf7-form .wpcf7-quiz,
+	.wpcf7-form .wpcf7-text,
+	.wpcf7-form textarea,
+	#username, #password,
+	#reg_email, #reg_password { font-size: 16px; }
+	.fusion-body .products li { width: 100% !important; }
+	.page-template-rc-page #content > .inner { padding: 0px 0px 20px; }
+	.page-id-176 #content > .inner { padding: 20px 20px 20px; }
+	.page-id-299 #content > .inner { padding: 20px 20px 0px; }
+	.page-id-113 #content > .inner { padding: 20px 20px 20px; }
+	.blog #content { padding: 20px 20px 60px; }
+	.recent-post-title { font-size: 24px; margin-bottom: 0px; }
+	.recent-post-excerpt { font-size: 12px; }
+	.single-media .media-listing-container h1 { line-height:112%;}
+
+	/* footer */
+	footer #text-4 { text-align: center; line-height: 140%; }
+	footer .fusion-social-networks { text-align: center; }
+	footer .fusion-columns-3 .fusion-column:nth-child(2) { display: none; }
+
+	/* event */
+	.blog .fusion-post-large .flexslider { float :none; margin-right: 0px; width: 100%; }
+	.blog .fusion-post-large .fusion-post-content { width: 100%; float: none; }
+	.blog .fusion-post-large .fusion-post-content p { margin-bottom: 0px; }
+	.blog .fusion-load-more-button { width: 70%;}
+
+	/* cart */
+	input.checkout-button {
+   		margin-top: 10px !important;
+	}
+
+	.video-clip iframe {
+		width: 100%;
+		height: auto;
+	}
+
+	/* My Account */
+
+	.woocommerce-account .myaccount_user_container span:nth-child(1) {width:100%;}
+
+	.fusion-page-title-captions h2 { font-size: 24px !important; }
+	/* home */
+
+	#black-studio-tinymce-2 img {width:100%;}
+	.page-template-recipes-php #media-posts-container,
+	.page-template-chef-php #media-posts-container,
+	.post-type-archive-media #media-posts-container{padding: 20px 0px 20px 0px !important;}
+
+}
+@media only screen and (max-width: 420px) {
+	/* containers */
+	#main { padding: 0px !important; }
+	.media-content { padding: 0px !important; }
+	.sneak_peek_title { margin-bottom: 20px; }
+	.sneak_peek_container .item-description p { margin-top: 0px; }
+	.product-buttons a { max-width: 60%; }
+
+	/* text */
+	.media-intro { font-size: 18px; }
+	.sneak-peek .item-description { width: 100%; }
+	.sneak-peek .item-description p { line-height: 140%; }
+	.single-media .post-content p { margin-bottom: 8px; }
+
+	/* hide recent post */
+	.media-list { list-style-type: none; padding: 0px; margin: 0px; }
+
+	.item-thumbnail { height: auto !important; }
+	.item-thumbnail a img.thumbnail { margin-left: 0px; width: 100% !important; height: auto !important; left: 0; }
+	.btn-layer .inner { width: 30%; opacity: 1; }
+	.btn-layer:hover .inner { width: 26%; }
+	.btn-layer { background-color: rgba(0, 0, 0, 0.45); }
+	.recent-post-container { opacity: 1; margin-top: -60px; }
+
+	.item-desc-content { position: relative; margin-bottom: 40px; padding: 0 20px;}
+	.item-name { margin-top: 20px; width: auto;}
+	.item-description { padding-top: 5px;  width: auto; }
+	.item-view { margin-top: 10px; width: auto; float:none;}
+	.item-view img { display: none; }
+	.media-list li { position: relative; margin-bottom: 20px; }
+	.media-list li.video { margin-bottom: 10px; }
+	.item-view .view-more {
+		padding: 10px 27px;
+		vertical-align: middle;
+		color: #fff;
+		background-color:#00adef;
+		font-size: 12px !important;
+		font-family: montserrat, helvetica, arial;
+        text-transform: uppercase;
+	}
+
+	.item-view .view-more:hover,
+	.item-view .view-more:active {
+		color: #fff;
+	}
+
+	/* event */
+	.blog .fusion-load-more-button { width: 90%; }
+
+	/* chef/recipe listing */
+	.teaser .desktop { display: none; }
+	.teaser .mobile { display: block; width:100%; }
+	.feature-inner {display: none;}
+	.link-feature .play-button,
+	.link-feature .image-button { display: none; }
+
+	a.fusion-icon.fusion-icon-bars:first-child {margin-left:10px;}
+	.fusion-mobile-menu-design-modern.fusion-header-v1 .fusion-header {padding-left:15px; padding-right:15px;}
+
+	.fusion-page-title-captions h2 {margin-bottom:0px;}
+
+}
+
+
+@media only screen and (max-width: 374px) {
+
+	/* Header */
+	a.fusion-icon.fusion-icon-bars:first-child {margin-left:7px;}
+	.fusion-logo a .fusion-standard-logo {max-height: 28px !important}
+
+	}
+
+@media only screen and (max-width: 320px) {
+
+    /*Header */
+	#wrapper .mob-my-account {margin-top: 1px;}
+	.fusion-mobile-menu-icons a {margin-top: 4px;}
+	.fusion-mobile-menu-icons a.mobile-btn-subscribe {padding: 8px 8px !important;margin-top: 0px;}
+
+	.btn { padding: 7px 20px; }
+	.media-intro { font-size: 16px; }
+	.media-listing-container p {
+		margin-top: 20px;
+	}
+}

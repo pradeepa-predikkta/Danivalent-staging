@@ -1,0 +1,64 @@
+/* Font Titles */
+
+.title-lrg-style1 {
+	font-family: 'Playfair Display', Arial, Helvetica, sans-serif!important;
+	font-size:30px;
+	color:#000;
+    font-weight: 400;
+	line-height:120%;
+	margin-top:0;
+	margin-bottom:10px;}
+
+.title-med-style1 {
+	font-family: 'Playfair Display', Arial, Helvetica, sans-serif!important;
+	font-size:24px;
+	color:#000;
+    font-weight: 400;
+	line-height:120%;
+	margin-top:0;
+	margin-bottom:10px;}
+
+.title-sml-style1 {
+	font-family: 'Playfair Display', Arial, Helvetica, sans-serif!important;
+	font-size:16px;
+	color:#000;
+    font-weight: 400;
+	line-height:120%;
+	margin-top:0;
+	margin-bottom:10px;}
+
+.title-lrg-style2 {
+	font-family: 'Montserrat', helvetica, arial !important;
+	font-size:30px;
+	color:#00adef;
+    font-weight: 400;
+	line-height:120%;
+	margin-top:0;
+	margin-bottom:10px;}
+
+.title-med-style2 {
+	font-family: 'Montserrat', helvetica, arial !important;
+	font-size:24px;
+	color:#00adef;
+    font-weight: 400;
+	line-height:120%;
+	margin-top:0;
+	margin-bottom:10px;}
+
+.title-sml-style2 {
+	font-family: 'Montserrat', helvetica, arial !important;
+	font-size:16px;
+	color:#00adef;
+    font-weight: 400;
+	line-height:120%;
+	margin-top:0;
+	margin-bottom:10px;}
+
+.title-xsml-style2 {
+	font-family: 'Montserrat', helvetica, arial !important;
+	font-size:12px;
+	color:#00adef;
+    font-weight: 400;
+	line-height:120%;
+	margin-top:0;
+	margin-bottom:10px;}
