@@ -2798,6 +2798,9 @@ h3.sub-header{
 	.mc4wp-form-theme input[type=submit]{
 		margin-top: 20px;
 	}	
+	.fusion-header-wrapper.fusion-is-sticky {
+    display: none;
+}
 }
 
 /* Checkbox */
