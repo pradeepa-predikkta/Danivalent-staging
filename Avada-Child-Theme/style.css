@@ -77,7 +77,10 @@ body #main a,
 .single #media-posts-container {padding: 40px 70px 40px 70px;}
 
 .page .fusion-row h1 {margin-top:0px;}
-
+/* home testimonial bullets */
+.home .well ol {
+    display: none;
+}
 /* home latest receipes- mobile slider */
 .mobile-view-all-receipes{ display: none; }
 /* Friends */
