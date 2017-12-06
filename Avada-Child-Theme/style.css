@@ -45,7 +45,28 @@ body #main a,
 .woocommerce-checkout #content {background-color:#fff; box-shadow: 0px 0px 6px rgba(0,0,0,0.2); position:relative; /*top:-60px;*/ z-index: 3; }
 
 .woocommerce-page .products > li h3 a {color:#f36523;}
-
+/* Monthly membership styles start here*/
+.woocommerce-error a {
+    margin-top: 14px !important;
+    display: block;
+    margin: 9px auto;
+        margin-top: 9px;
+    float: none;
+    width: 186px;
+    text-align: center;
+    width: 200px;
+}
+.woocommerce-error li {
+    margin-bottom: 15px;
+    padding: 8px;
+    position: relative;
+    text-align: center;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+    position: absolute;
+}
+/* Monthly membership end here*/
 .post-type-archive-media #media-posts-container {
 	top: -86px;
 }
