@@ -190,7 +190,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		<span class="screen-reader-text">Search for:</span>
 		<input type="search" class="search-field" placeholder="Search …" value="" name="s" title="Search for:" />
 	</label>
-	<input type="submit" class="search-submit" value="Search" />
+	<input type="submit" class="search-submit" value="Go" />
 	<i class="seach-header-close">X</i>
 </form>
    
