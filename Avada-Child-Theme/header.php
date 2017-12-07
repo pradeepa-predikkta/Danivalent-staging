@@ -29,6 +29,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 		var doc = document.documentElement;
 		doc.setAttribute('data-useragent', navigator.userAgent);
 	</script>
+<script type="text/javascript">
+jQuery(document).ready(function($){
+$(".text-search").hide();
+    $("#menu-item-32390 .menu-text").click(function(){
+        $(".text-search").toggle(); 
+         $('.seach-header-close').on('click', function(e) {$(".text-search").hide(); });
+
+    });
+});
+</script>
 
 	<?php
 	/**
@@ -173,6 +183,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		<?php if ( 'Left' === Avada()->settings->get( 'header_position' ) || 'Right' === Avada()->settings->get( 'header_position' ) ) : ?>
 			<?php avada_side_header(); ?>
 		<?php endif; ?>
+		<div class="text-search">
+<div class="search-dropdown search-hidden-section">
+      <form role="search" method="get" class="search-form" action="<?php echo home_url( '/' ); ?>">
+	<label>
+		<span class="screen-reader-text">Search for:</span>
+		<input type="search" class="search-field" placeholder="Search …" value="" name="s" title="Search for:" />
+	</label>
+	<input type="submit" class="search-submit" value="Search" />
+	<i class="seach-header-close">X</i>
+</form>
+   
+    </div>
+</div>
+
+
 
 		<div id="sliders-container">
 		     <?php
