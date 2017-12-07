@@ -2833,7 +2833,7 @@ h3.sub-header{
 @media (max-width: 1099px){
 #breadcrumbs { width: 98%; padding-left: 10px;}
 }
-@media (max-width: 767px) {
+@media (max-width: 946px) {
 	.text-search, #mobile-menu-item-32390{ display: none; }
 	}
 @media (max-width: 767px) {
