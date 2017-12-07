@@ -45,6 +45,38 @@ body #main a,
 .woocommerce-checkout #content {background-color:#fff; box-shadow: 0px 0px 6px rgba(0,0,0,0.2); position:relative; /*top:-60px;*/ z-index: 3; }
 
 .woocommerce-page .products > li h3 a {color:#f36523;}
+/* search header */
+.text-search {
+    width: 300px;
+    position: absolute;
+    z-index: 999;
+    left: 66%;
+    background: #fff;
+    padding: 15px;
+}
+.text-search .search-submit {
+    background: #f36523;
+    border: none;
+    padding: 5px 10px;
+    color: #fff;
+    float: left;
+    height: 26px;
+    margin-left: 10px;
+}
+.text-search .search-field {
+    float: left;
+}
+#menu-item-32390 .menu-text {
+    text-indent: -9999px;
+    display: block;
+    padding: 0 9px;
+    background: url("http://dv.predikktadev.com/wp-content/uploads/2017/12/search_icon.png") no-repeat center center;
+}
+.seach-header-close {
+    position: absolute;
+    right: 12px;
+    top: 0; cursor: pointer;
+}
 /* Monthly membership styles start here*/
 .woocommerce-error a {
     margin-top: 14px !important;
